@@ -1,0 +1,19 @@
+<Window x:Class="NeoUninstall.Views.PreviewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Deletion preview" Width="780" Height="520" MinWidth="560" MinHeight="360"
+        Background="{StaticResource BgBrush}" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+  <DockPanel Margin="20">
+    <TextBlock x:Name="Header" DockPanel.Dock="Top" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10" TextWrapping="Wrap"/>
+    <StackPanel DockPanel.Dock="Bottom" Margin="0,14,0,0">
+      <CheckBox x:Name="Ack" Foreground="{StaticResource TextBrush}" Margin="0,0,0,12"
+                Content="I have reviewed every path above and want to delete these items."/>
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+        <Button Content="Cancel" Click="Cancel_Click" Margin="0,0,10,0"/>
+        <Button Content="Delete" Click="Delete_Click" Style="{StaticResource AccentButton}" IsEnabled="{Binding IsChecked, ElementName=Ack}"/>
+      </StackPanel>
+    </StackPanel>
+    <TextBox x:Name="PreviewText" IsReadOnly="True" FontFamily="Consolas" FontSize="12" TextWrapping="NoWrap"
+             HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"/>
+  </DockPanel>
+</Window>

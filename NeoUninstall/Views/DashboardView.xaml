@@ -1,0 +1,57 @@
+<UserControl x:Class="NeoUninstall.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <DockPanel>
+    <DockPanel DockPanel.Dock="Top" Margin="0,0,0,22">
+      <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+        <Button Content="Cancel" Command="{Binding CancelScanCommand}" Margin="0,0,10,0"/>
+        <Button Content="Start Full Scan" Command="{Binding StartScanCommand}" Style="{StaticResource AccentButton}"/>
+      </StackPanel>
+      <StackPanel>
+        <TextBlock Text="Dashboard" FontSize="26" FontWeight="SemiBold"/>
+        <TextBlock Text="{Binding Status}" Style="{StaticResource Muted}"/>
+      </StackPanel>
+    </DockPanel>
+    <ProgressBar DockPanel.Dock="Top" Height="4" IsIndeterminate="True" Margin="0,0,0,18" Foreground="{StaticResource CyanBrush}"
+                 Background="{StaticResource Surface2Brush}" BorderThickness="0"
+                 Visibility="{Binding IsScanning, Converter={StaticResource B2V}}"/>
+    <UniformGrid DockPanel.Dock="Top" Columns="3" Margin="0,0,0,18">
+      <Border Style="{StaticResource Card}" Margin="0,0,12,0"><StackPanel>
+        <TextBlock Text="Installed applications" Style="{StaticResource Muted}"/>
+        <TextBlock Text="{Binding AppCount}" FontSize="34" FontWeight="Bold" Foreground="{StaticResource CyanBrush}"/></StackPanel></Border>
+      <Border Style="{StaticResource Card}" Margin="0,0,12,0"><StackPanel>
+        <TextBlock Text="Broken uninstall entries" Style="{StaticResource Muted}"/>
+        <TextBlock Text="{Binding BrokenCount}" FontSize="34" FontWeight="Bold" Foreground="{StaticResource WarnBrush}"/></StackPanel></Border>
+      <Border Style="{StaticResource Card}"><StackPanel>
+        <TextBlock Text="Leftover items" Style="{StaticResource Muted}"/>
+        <TextBlock Text="{Binding LeftoverCount}" FontSize="34" FontWeight="Bold" Foreground="{StaticResource CyanBrush}"/>
+        <TextBlock Style="{StaticResource Muted}" FontSize="11">
+          <Run Text="Potentially reclaimable (High + Medium): "/><Run Text="{Binding Reclaimable, Mode=OneWay}"/>
+        </TextBlock></StackPanel></Border>
+    </UniformGrid>
+    <UniformGrid DockPanel.Dock="Top" Columns="3" Margin="0,0,0,18">
+      <Border Style="{StaticResource Card}" Margin="0,0,12,0"><StackPanel>
+        <TextBlock Text="Startup entries" Style="{StaticResource Muted}"/>
+        <TextBlock Text="{Binding StartupTotal}" FontSize="26" FontWeight="Bold"/>
+        <TextBlock Text="{Binding StartupFlagged, StringFormat='{}{0} with missing target'}" Style="{StaticResource Muted}" FontSize="11"/></StackPanel></Border>
+      <Border Style="{StaticResource Card}" Margin="0,0,12,0"><StackPanel>
+        <TextBlock Text="Third-party scheduled tasks" Style="{StaticResource Muted}"/>
+        <TextBlock Text="{Binding TasksTotal}" FontSize="26" FontWeight="Bold"/>
+        <TextBlock Text="{Binding TasksFlagged, StringFormat='{}{0} possibly orphaned'}" Style="{StaticResource Muted}" FontSize="11"/></StackPanel></Border>
+      <Border Style="{StaticResource Card}"><StackPanel>
+        <TextBlock Text="Third-party services" Style="{StaticResource Muted}"/>
+        <TextBlock Text="{Binding ServicesTotal}" FontSize="26" FontWeight="Bold"/>
+        <TextBlock Text="{Binding ServicesFlagged, StringFormat='{}{0} possibly orphaned'}" Style="{StaticResource Muted}" FontSize="11"/></StackPanel></Border>
+      </UniformGrid>
+    <Border Style="{StaticResource Card}">
+      <DockPanel>
+        <TextBlock DockPanel.Dock="Top" Text="Recent scan activity" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+        <ItemsControl ItemsSource="{Binding Recent}">
+          <ItemsControl.ItemTemplate><DataTemplate>
+            <TextBlock Text="{Binding Summary}" Margin="0,4" Style="{StaticResource Muted}"/>
+          </DataTemplate></ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </DockPanel>
+    </Border>
+  </DockPanel>
+</UserControl>
